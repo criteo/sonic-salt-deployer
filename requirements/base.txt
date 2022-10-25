@@ -1,0 +1,13 @@
+asyncssh
+bcrypt
+coloredlogs
+cryptography
+dnspython
+hvac
+jq
+futurelog
+prometheus-client
+pydantic[dotenv]
+pyyaml
+requests
+scp

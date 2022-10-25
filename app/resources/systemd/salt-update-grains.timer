@@ -1,0 +1,8 @@
+[Unit]
+Description=Update salt grains
+
+[Timer]
+OnCalendar=hourly
+
+[Install]
+WantedBy=timers.target

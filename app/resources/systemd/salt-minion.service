@@ -1,0 +1,16 @@
+[Service]
+Type = notify
+ExecStart = /opt/salt/salt-minion
+RestartSec = 5s
+Restart = on-failure
+NotifyAccess = all
+LimitNOFILE = 100000
+
+[Unit]
+Description = The Salt Minion Server
+Documentation = https://docs.saltstack.com/en/latest/contents.html
+Wants = network-online.target
+After = network-online.target
+
+[Install]
+WantedBy = multi-user.target

@@ -1,0 +1,8 @@
+[Unit]
+Description=Update salt grains
+
+[Service]
+ExecStart=/usr/bin/python /opt/salt/update_grains.py
+
+[Install]
+WantedBy=multi-user.target
