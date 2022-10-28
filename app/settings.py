@@ -21,7 +21,6 @@ class Settings(BaseSettings):
     resolve_dns_resolvers_hostname: bool = False
 
     minion_files_local_directory: Optional[str]
-    minion_files_remote_location: Optional[str]
     minion_files_nexus_location: Optional[str]
 
     ##
