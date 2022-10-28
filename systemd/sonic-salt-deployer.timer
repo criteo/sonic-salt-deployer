@@ -1,0 +1,9 @@
+[Timer]
+OnBootSec = 10min
+OnUnitActiveSec = 720min
+
+[Unit]
+Description = Periodically ensure Salt is installed and well configured on all SONiC devices
+
+[Install]
+WantedBy = timers.target
