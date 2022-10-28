@@ -1,0 +1,11 @@
+master:
+  - salt-master.dc.lan
+
+# recommended to keep Salt PKI when upgrading SONiC
+pki_dir: /etc/sonic/salt/pki/minion
+
+# local logging disabled, remote logging to error level.
+log_level: quiet
+log_level_file: error
+log_file: udp://logging-server.lan:5140
+rejected_retry: True

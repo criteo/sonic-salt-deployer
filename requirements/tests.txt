@@ -1,0 +1,15 @@
+black
+coverage
+invoke
+isort
+mypy
+pydocstyle
+pylama
+pylint
+pytest
+pytest-benchmark
+pytest-mock
+setuptools
+six
+tox
+types-requests
