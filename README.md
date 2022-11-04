@@ -21,4 +21,17 @@ pip install -r requirements/base.txt
 
 # How to use it
 
-TODO
+## Settings
+
+See [settings.env](settings.env)
+
+## Usage
+
+```
+pip install -r requirements/base.txt
+python ./start.py
+```
+
+Or build the PEX via `tox -e bundle` and run the executable.
+
+You can use systemd [service](systemd/sonic-salt-deployer.service) and its [timer](systemd/sonic-salt-deployer.timer).

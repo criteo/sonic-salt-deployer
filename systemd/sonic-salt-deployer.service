@@ -1,0 +1,8 @@
+[Service]
+Type = simple
+ExecStart = /opt/sonic-salt-deployer/sonic-salt-deployer
+
+[Unit]
+Description = Tool to deploy Salt on SONiC
+Wants = network-online.target
+After = network-online.target

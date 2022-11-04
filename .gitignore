@@ -120,4 +120,3 @@ venv3/
 *.ignore
 *.ignore.*
 minion.yml
-settings.env
