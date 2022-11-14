@@ -1,5 +1,6 @@
 #!/usr/bin/python
-# type: ignore pylint: disable=E0401
+# type: ignore
+# pylint: disable=E0401
 """Script to update grains.
 
 Once sonic_device_util will be available as python3 lib, this script should use it to

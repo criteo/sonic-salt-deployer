@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     prometheus_listen_port: int = 9000
     force: bool = False
     dry_run: bool = False
-    no_pretty: bool = False
+    pretty_logs: bool = True
     log_level: str = "INFO"
 
     sonic_versions: list[str]
@@ -46,7 +46,7 @@ class Settings(BaseSettings):
     vault_login: Optional[str]
     vault_password: Optional[str]
     vault_secret_path: Optional[str]
-    vault_device_usernames: list[str]
+    vault_device_usernames: Optional[list[str]]
 
     def __init__(self, **kwargs: Any) -> None:
         """Override init to add post init."""

@@ -2,7 +2,7 @@
 import hashlib
 import json
 import os
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import asyncssh  # type: ignore
 import hvac  # type: ignore
@@ -107,7 +107,7 @@ def request_api(request: str) -> Dict:
 
 
 def get_passwords(
-    users: list, path: str, kv_v2: bool = False, mount_point: str = None
+    users: list, path: str, kv_v2: bool = False, mount_point: Optional[str] = None
 ) -> dict[str, str]:
     """Get passwords from Vault."""
     passwords = {}
