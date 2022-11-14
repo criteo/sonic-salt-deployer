@@ -46,7 +46,7 @@ class Settings(BaseSettings):
     vault_login: Optional[str]
     vault_password: Optional[str]
     vault_secret_path: Optional[str]
-    vault_device_usernames: list[str]
+    vault_device_usernames: Optional[list[str]]
 
     def __init__(self, **kwargs: Any) -> None:
         """Override init to add post init."""
