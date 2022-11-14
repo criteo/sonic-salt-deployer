@@ -222,7 +222,7 @@ async def start_app() -> None:
     signal.signal(signal.SIGINT, stop_request)
 
     # pretty logging
-    if not CONF.no_pretty:
+    if CONF.pretty_logs:
         coloredlogs.install(fmt="%(name)s\t\t%(levelname)s\t\t%(message)s")
 
     credentials = _get_credentials()

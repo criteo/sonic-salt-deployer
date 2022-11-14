@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     prometheus_listen_port: int = 9000
     force: bool = False
     dry_run: bool = False
-    no_pretty: bool = False
+    pretty_logs: bool = True
     log_level: str = "INFO"
 
     sonic_versions: list[str]
