@@ -18,7 +18,8 @@ from app.exceptions import (
 )
 from app.settings import CONF
 
-FUTURE_LOGGER = FutureLogger(__name__)
+FUTURE_LOGGER = FutureLogger(__name__, CONF.log_level)
+
 
 in_progress = False  # pylint: disable=C0103
 stop_requested = False  # pylint: disable=C0103

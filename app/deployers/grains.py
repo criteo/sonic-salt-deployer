@@ -5,9 +5,10 @@ from futurelog import FutureLogger
 
 from app import resources
 from app.deployers.deployer import Deployer
+from app.settings import CONF
 from app.utils import extract_checksum, get_sha256, upload_file
 
-FUTURE_LOGGER = FutureLogger(__name__)
+FUTURE_LOGGER = FutureLogger(__name__, CONF.log_level)
 
 
 class GrainsDeployer(Deployer):

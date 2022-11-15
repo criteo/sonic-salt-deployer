@@ -14,7 +14,7 @@ from app.settings import CONF
 from app.utils import extract_checksum, upload_file
 
 LOGGER = get_logger(__name__)
-FUTURE_LOGGER = FutureLogger(__name__)
+FUTURE_LOGGER = FutureLogger(__name__, CONF.log_level)
 
 PYTHON_SHEBANG = "#!/usr/bin/env python"
 

@@ -8,9 +8,10 @@ from app.deployers.deployer import Deployer
 from app.exceptions import ConfigDeployerException
 from app.logger import get_logger
 from app.settings import CONF
+from app.utils import upload_file
 
 LOGGER = get_logger(__name__)
-FUTURE_LOGGER = FutureLogger(__name__)
+FUTURE_LOGGER = FutureLogger(__name__, CONF.log_level)
 
 
 class ConfigDeployer(Deployer):
@@ -123,9 +124,9 @@ class ConfigDeployer(Deployer):
 
         details here: https://wiki.debian.org/resolv.conf
         """
+        await upload_file(self.hostname, self.ssh, CONF.minion_config_file, "/etc/salt/", "minion")
+
         commands = {
-            "create /etc/salt": "if [ ! -d /etc/salt ] ; then sudo mkdir /etc/salt; fi",
-            "write minion config": f"echo '{CONF.minion_config}' | sudo tee /etc/salt/minion",
             "change permission": "sudo chmod 600 /etc/salt/minion",
             "get back pki after an upgrade": (
                 "if [ ! -d /etc/sonic/salt ] && [ -d /etc/sonic/old_config/salt ] ; "

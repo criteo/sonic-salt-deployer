@@ -1,7 +1,20 @@
 """SONiC Salt Deployer settings."""
+import json
+from pathlib import Path
 from typing import Any, Optional
 
 from pydantic import BaseSettings
+
+from app.exceptions.config_exception import InvalidConfiguration
+
+
+def json_config_settings_source(settings: BaseSettings) -> dict[str, Any]:
+    """Load configuration from json file."""
+    encoding = settings.__config__.env_file_encoding
+    try:
+        return json.loads(Path("settings.json").read_text(encoding))
+    except FileNotFoundError:
+        return {}
 
 
 class Settings(BaseSettings):
@@ -55,7 +68,15 @@ class Settings(BaseSettings):
 
     def _post_init(self) -> None:
         """Set parameters after initialization."""
-        if not self.minion_config:
+        if not self.minion_config_file:
+            raise InvalidConfiguration("missing configuration file")
+
+        # if self.minion_config is defined, we save its content to minion_config file
+        if self.minion_config:
+            with open(self.minion_config_file, "w", encoding="utf-8") as config_file:
+                config_file.write(self.minion_config)
+        # or we load the content from minion_config file
+        else:
             with open(self.minion_config_file, "r", encoding="utf-8") as config_file:
                 self.minion_config = config_file.read()
 
@@ -78,6 +99,11 @@ class Settings(BaseSettings):
 
         env_file = "settings.env"
         env_file_encoding = "utf-8"
+
+        @classmethod
+        def customise_sources(cls, init_settings, env_settings, file_secret_settings):
+            """Customise source of settings."""
+            return (init_settings, json_config_settings_source, env_settings, file_secret_settings)
 
 
 CONF = Settings()

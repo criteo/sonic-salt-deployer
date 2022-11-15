@@ -25,7 +25,7 @@ from app.logger import get_logger
 from app.settings import CONF
 
 LOGGER = get_logger(__name__)
-FUTURE_LOGGER = FutureLogger(__name__)
+FUTURE_LOGGER = FutureLogger(__name__, CONF.log_level)
 
 
 DEFAULT_PASSWORD_SUFFIX = "_default"
