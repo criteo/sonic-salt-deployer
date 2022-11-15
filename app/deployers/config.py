@@ -10,7 +10,7 @@ from app.logger import get_logger
 from app.settings import CONF
 
 LOGGER = get_logger(__name__)
-FUTURE_LOGGER = FutureLogger(__name__)
+FUTURE_LOGGER = FutureLogger(__name__, CONF.log_level)
 
 
 class ConfigDeployer(Deployer):

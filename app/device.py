@@ -14,9 +14,10 @@ from app.deployers import (
 from app.exceptions import DeviceConnectionException
 from app.logger import get_logger
 from app.metrics import DEPLOYMENT_STATUS
+from app.settings import CONF
 
 LOGGER = get_logger(__name__)
-FUTURE_LOGGER = FutureLogger(__name__)
+FUTURE_LOGGER = FutureLogger(__name__, CONF.log_level)
 
 
 class Device:

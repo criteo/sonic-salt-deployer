@@ -6,10 +6,11 @@ from futurelog import FutureLogger
 from app import resources
 from app.deployers.deployer import Deployer
 from app.logger import get_logger
+from app.settings import CONF
 from app.utils import extract_checksum, get_sha256, upload_file
 
 LOGGER = get_logger(__name__)
-FUTURE_LOGGER = FutureLogger(__name__)
+FUTURE_LOGGER = FutureLogger(__name__, CONF.log_level)
 
 
 class SystemdDeployer(Deployer):
