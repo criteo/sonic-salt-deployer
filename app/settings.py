@@ -1,7 +1,18 @@
 """SONiC Salt Deployer settings."""
+import json
+from pathlib import Path
 from typing import Any, Optional
 
 from pydantic import BaseSettings
+
+
+def json_config_settings_source(settings: BaseSettings) -> dict[str, Any]:
+    """Load configuration from json file."""
+    encoding = settings.__config__.env_file_encoding
+    try:
+        return json.loads(Path("settings.json").read_text(encoding))
+    except FileNotFoundError:
+        return {}
 
 
 class Settings(BaseSettings):
@@ -78,6 +89,11 @@ class Settings(BaseSettings):
 
         env_file = "settings.env"
         env_file_encoding = "utf-8"
+
+        @classmethod
+        def customise_sources(cls, init_settings, env_settings, file_secret_settings):
+            """Customise source of settings."""
+            return (init_settings, json_config_settings_source, env_settings, file_secret_settings)
 
 
 CONF = Settings()
