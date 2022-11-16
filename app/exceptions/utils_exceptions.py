@@ -15,3 +15,11 @@ class ChecksumException(RuntimeError):
     def __init__(self, msg: str) -> None:
         """Initialize."""
         super().__init__(f"Checksum issue: {msg}")
+
+
+class UploadException(RuntimeError):
+    """Exception while upload a file."""
+
+    def __init__(self, msg: str) -> None:
+        """Initialize."""
+        super().__init__(f"Upload issue: {msg}")
