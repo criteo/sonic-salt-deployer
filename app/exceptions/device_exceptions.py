@@ -7,3 +7,11 @@ class DeviceConnectionException(RuntimeError):
     def __init__(self, msg: str) -> None:
         """Initialize."""
         super().__init__(f"Connection issues with device: {msg}")
+
+
+class UnknownSonicVersionException(RuntimeError):
+    """Exception found when trying to get SONiC version."""
+
+    def __init__(self, msg: str) -> None:
+        """Initialize."""
+        super().__init__(f"SONiC version unknown for device: {msg}")
