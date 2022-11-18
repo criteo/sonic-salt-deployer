@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # type: ignore
-# pylint: disable=E0401
+# pylint: disable=E0401,C0412
 """Script to update grains.
 
 Once sonic_device_util will be available as python3 lib, this script should use it to
@@ -12,11 +12,14 @@ import os
 import yaml
 
 try:
-    import sonic_device_util as sonic_info
-    from show.main import get_hw_info_dict
-except (ImportError, ModuleNotFoundError):
     from sonic_py_common import device_info as sonic_info
-    from sonic_py_common import get_platform_info as get_hw_info_dict
+except ImportError:
+    import sonic_device_util as sonic_info
+
+try:
+    from sonic_py_common.device_info import get_platform_info as get_hw_info_dict
+except ImportError:
+    from show.main import get_hw_info_dict
 
 
 class Grains:
