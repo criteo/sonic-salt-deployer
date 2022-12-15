@@ -57,10 +57,13 @@ class MinionDeployer(Deployer):
 
     @classmethod
     def _get_latest_nexus_build(cls) -> str:
-        response = requests.get(
-            f"{CONF.minion_files_nexus_location}/maven-metadata.xml", timeout=60
-        )
-        root = ET.fromstring(response.text)
+        try:
+            response = requests.get(
+                f"{CONF.minion_files_nexus_location}/maven-metadata.xml", timeout=60
+            )
+            root = ET.fromstring(response.text)
+        except (requests.HTTPError, requests.RequestException) as error:
+            raise MinionDeployerException("error while fetching metadata in Nexus") from error
 
         return root.find("versioning").find("latest").text  # type: ignore
 
@@ -68,11 +71,14 @@ class MinionDeployer(Deployer):
     def _get_checksum_from_nexus(cls, nexus_release, sonic_version) -> None:
         basename = f"salt-minion-{nexus_release}-{sonic_version}.pex"
         # get checksum
-        checksum = requests.get(
-            f"{CONF.minion_files_nexus_location}/{nexus_release}/{basename}.sha256",
-            timeout=60,
-        )
-        checksum.raise_for_status()
+        try:
+            checksum = requests.get(
+                f"{CONF.minion_files_nexus_location}/{nexus_release}/{basename}.sha256",
+                timeout=60,
+            )
+            checksum.raise_for_status()
+        except (requests.HTTPError, requests.RequestException) as error:
+            raise MinionDeployerException("error while fetching minion from nexus") from error
 
         if not re.match(r"^[A-Fa-f0-9]{64}$", checksum.text):
             raise MinionDeployerException("invalid checksum value")  # InconsistentChecksum

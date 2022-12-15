@@ -11,7 +11,7 @@ from app.deployers import (
     MinionDeployer,
     SystemdDeployer,
 )
-from app.exceptions import DeviceConnectionException
+from app.exceptions import DeviceConnectionException, UnknownSonicVersionException
 from app.logger import get_logger
 from app.metrics import DEPLOYMENT_STATUS
 from app.settings import CONF
@@ -35,6 +35,7 @@ class Device:
         self.hostname = hostname
         self.connected = False
         self.sonic_version = ""
+        self.components = {}
 
     async def connect(self, user: str, password: str) -> None:
         """Connect to the device via SSH."""
@@ -50,7 +51,7 @@ class Device:
 
         self.sonic_version = await self.get_running_sonic_version()
         if not self.sonic_version:
-            raise DeviceConnectionException("Running SONiC version not found")
+            raise UnknownSonicVersionException("failed to parse")
 
         FUTURE_LOGGER.info(self.hostname, f"SONiC version: {self.sonic_version}")
         self.components = {
@@ -79,13 +80,20 @@ class Device:
             FUTURE_LOGGER.info(self.hostname, "Command to determine SONiC version failed")
             return ""
 
+        if not response.stdout.splitlines():
+            FUTURE_LOGGER.info(self.hostname, "Failed to parse SONiC version")
+            return ""
+
         return response.stdout.splitlines()[0]
 
     async def is_salt_ready(self) -> bool:
         """Check if Salt is properly installed."""
         status = True
-        for component in self.components.values():
-            status = status and await component.check()
+        if self.components:
+            for component in self.components.values():
+                status = status and await component.check()
+        else:
+            status = False
 
         DEPLOYMENT_STATUS.labels(self.hostname, self.sonic_version).set(int(status))
 
@@ -114,6 +122,10 @@ class Device:
         It will stop if one step fails.
         """
         changed = False
+
+        if not self.components:
+            FUTURE_LOGGER.error(self.hostname, "missing deployer requirements")
+            return False
 
         for name, component in self.components.items():
             # we deploy only if not already deployed

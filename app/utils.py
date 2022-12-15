@@ -16,6 +16,7 @@ from app.exceptions import (
     VaultPasswordNotFound,
     VaultUnreachable,
 )
+from app.exceptions.utils_exceptions import UploadException
 from app.settings import CONF
 
 FUTURE_LOGGER = FutureLogger(__name__, CONF.log_level)
@@ -46,7 +47,10 @@ async def upload_file(
 
     # Push grain script
     FUTURE_LOGGER.debug(hostname, "pushing %s to remote", local_resource)
-    await asyncssh.scp(absolute_filepath, (ssh, "/tmp"))
+    try:
+        await asyncssh.scp(absolute_filepath, (ssh, "/tmp"))
+    except asyncssh.sftp.SFTPFailure as error:
+        raise UploadException(f"{remote_name} because of: {error}") from error
 
     # Put it in the right place and change the owner to root:root.
     remote_filepath = os.path.join(remote_dir, remote_name)
