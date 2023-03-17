@@ -1,4 +1,4 @@
-# Sonic Salt deployer
+# SONiC Salt deployer
 
 The goal of this program is to deploy and configure Salt minions on SONiC devices.
 
