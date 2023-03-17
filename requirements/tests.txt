@@ -3,7 +3,7 @@ coverage
 invoke
 isort
 mypy
-pydocstyle
+pydocstyle < 6.2
 pylama
 pylint
 pytest

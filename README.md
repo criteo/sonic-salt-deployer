@@ -1,6 +1,6 @@
 # SONiC Salt deployer
 
-The goal of this program is to deploy and configure Salt minions on SONiC devices.
+The goal of this tool is to deploy and configure Salt minions on SONiC devices.
 
 It includes:
 
@@ -10,6 +10,8 @@ It includes:
 * Systemd services / timers
 
 Each part will be deployed only if necessary.
+
+Once deployed, feel free to use our [SONiC Salt modules](https://github.com/criteo/sonic-saltstack/tree/main)!
 
 # Prepare your environment
 
