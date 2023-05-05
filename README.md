@@ -1,6 +1,10 @@
 # SONiC Salt deployer
 
-The goal of this tool is to deploy and configure Salt minions on SONiC devices.
+> This repository is part of [AFK](https://criteo.github.io/AFK).
+
+The full documentation can be found here: [AFK documentation](https://criteo.github.io/AFK/SONiC-support/SONiC-Salt-Deployer/)
+
+The goal of this program is to deploy and configure Salt minions on SONiC devices.
 
 It includes:
 
@@ -37,3 +41,7 @@ python ./start.py
 Or build the PEX via `tox -e bundle` and run the executable.
 
 You can use this systemd [service](systemd/sonic-salt-deployer.service) and its [timer](systemd/sonic-salt-deployer.timer).
+
+## How to contribute
+
+see [CONTRIBUTING.md](CONTRIBUTING.md)
