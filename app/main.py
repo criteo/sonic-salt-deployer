@@ -81,7 +81,7 @@ async def deploy_on_device(hostname: str, credentials: Dict) -> bool:
     # Try to connect with one user in the list
     for user, password in credentials.items():
         if user.endswith(DEFAULT_PASSWORD_SUFFIX):
-            user = user[: -len(DEFAULT_PASSWORD_SUFFIX)]
+            user = user[: -len(DEFAULT_PASSWORD_SUFFIX)]  # noqa: PLW2901
 
         try:
             await device.connect(user, password)
