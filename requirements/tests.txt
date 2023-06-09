@@ -3,9 +3,6 @@ coverage
 invoke
 isort
 mypy
-pydocstyle < 6.2
-pylama
-pylint
 pytest
 pytest-benchmark
 pytest-mock
@@ -13,3 +10,4 @@ setuptools
 six
 tox
 types-requests
+ruff
