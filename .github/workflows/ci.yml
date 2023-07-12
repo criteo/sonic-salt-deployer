@@ -16,9 +16,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install tox
-      - name: Running checks with Tox
+      - name: Run linters
         run: |
-          tox
+          tox -e lint
+      - name: Run tests
+        run: |
+          tox -e test
 
   commitlint:
     runs-on: ubuntu-latest
