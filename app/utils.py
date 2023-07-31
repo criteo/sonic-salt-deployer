@@ -49,7 +49,7 @@ async def upload_file(
     FUTURE_LOGGER.debug(hostname, "pushing %s to remote", local_resource)
     try:
         await asyncssh.scp(absolute_filepath, (ssh, "/tmp"))
-    except asyncssh.sftp.SFTPFailure as error:
+    except (asyncssh.sftp.SFTPFailure, FileNotFoundError) as error:
         raise UploadException(f"{remote_name} because of: {error}") from error
 
     # Put it in the right place and change the owner to root:root.
